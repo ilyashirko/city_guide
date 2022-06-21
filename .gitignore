@@ -1,6 +1,7 @@
 # directories
 env
 temp
+media
 **/__pycache__
 
 # settings
