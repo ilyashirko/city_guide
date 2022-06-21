@@ -1,5 +1,6 @@
 # directories
 env
+temp
 **/__pycache__
 
 # settings
