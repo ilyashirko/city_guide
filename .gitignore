@@ -1,0 +1,10 @@
+# directories
+env
+**/__pycache__
+
+# settings
+.vscode
+
+# private data
+.env
+*.sqlite3
