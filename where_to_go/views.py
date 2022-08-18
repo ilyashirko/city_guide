@@ -32,7 +32,7 @@ def main_page(request):
     return render(request, 'index.html', context)
 
 
-def place(request, place_id=None):
+def place_via_id(request, place_id=None):
     place = Place.objects.get(id=place_id)
     images_paths = [str(image.image) for image in place.place.all()]
     images_urls = [
@@ -50,4 +50,8 @@ def place(request, place_id=None):
                 "lat": place.latitude
             }
         }
-    return JsonResponse(detailes)
+    return JsonResponse(
+        detailes,
+        safe=False,
+        json_dumps_params={'ensure_ascii': False, 'indent': 4}
+    )
