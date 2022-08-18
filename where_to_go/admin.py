@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from where_to_go.models import Image, Place
 
+
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     list_display = (
@@ -10,6 +11,7 @@ class PlaceAdmin(admin.ModelAdmin):
         'longitude',
         'latitude'
     )
+
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
