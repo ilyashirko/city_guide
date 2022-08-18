@@ -26,7 +26,6 @@ def main_page(request):
             },
             "properties": {
                 "title": place.title,
-                "placeId": "moscow_legends",
                 "detailsUrl": f'http://127.0.0.1:8000/places/{place.id}'
             }
         })
