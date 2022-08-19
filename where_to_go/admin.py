@@ -3,6 +3,10 @@ from django.contrib import admin
 from where_to_go.models import Image, Place
 
 
+class ImageInline(admin.TabularInline):
+    model = Image
+
+
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     list_display = (
@@ -11,6 +15,7 @@ class PlaceAdmin(admin.ModelAdmin):
         'longitude',
         'latitude'
     )
+    inlines = (ImageInline, )
 
 
 @admin.register(Image)
