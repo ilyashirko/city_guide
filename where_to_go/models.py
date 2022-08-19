@@ -23,3 +23,6 @@ class Image(models.Model):
     )
     index = models.SmallIntegerField('Порядковый номер (UNIQUE ONLY)')
     image = models.ImageField('Изображение', upload_to=IMAGES_PATH)
+
+    class Meta:
+        ordering = ['index']

@@ -1,10 +1,19 @@
 from django.contrib import admin
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from where_to_go.models import Image, Place
 
 
 class ImageInline(admin.TabularInline):
     model = Image
+    readonly_fields = ("preview", )
+    fields = ('image', 'preview', 'index')
+    def preview(self, obj):
+        return format_html(
+            f'<img src="{obj.image.url}" '
+            f'height=200 />'
+    )
 
 
 @admin.register(Place)
