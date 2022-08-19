@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce.models import HTMLField
 
 from city_guide.settings import IMAGES_PATH
 
@@ -6,7 +7,7 @@ from city_guide.settings import IMAGES_PATH
 class Place(models.Model):
     title = models.CharField('Название', max_length=100)
     short_description = models.TextField('Короткое описание')
-    full_description = models.TextField('Полное описание')
+    full_description = HTMLField('Полное описание')
     longitude = models.FloatField('Долгота')
     latitude = models.FloatField('Широта')
 

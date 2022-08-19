@@ -1,6 +1,6 @@
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from where_to_go.views import main_page, place_via_id
 
 from . import settings
@@ -8,7 +8,8 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_page),
-    path('places/<int:place_id>', place_via_id)
+    path('places/<int:place_id>', place_via_id),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 urlpatterns += static(

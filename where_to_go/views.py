@@ -34,7 +34,7 @@ def main_page(request):
 
 def place_via_id(request, place_id=None):
     place = Place.objects.get(id=place_id)
-    images_paths = [str(image.image) for image in place.place.all()]
+    images_paths = [str(image.image) for image in place.images.all()]
     images_urls = [
         urljoin(request.get_host(), f'{settings.MEDIA_URL}{image_path}')
         for image_path in images_paths
