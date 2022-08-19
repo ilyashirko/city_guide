@@ -3,28 +3,36 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from where_to_go.models import Image, Place
+from adminsortable2.admin import SortableStackedInline, SortableAdminMixin
 
 
-class ImageInline(admin.TabularInline):
+class ImageInline(SortableStackedInline):
     model = Image
     readonly_fields = ("preview", )
-    fields = ('image', 'preview', 'index')
+    fields = ['id', 'image', 'preview', ]
+    extra = 0
+    
     def preview(self, obj):
         return format_html(
             f'<img src="{obj.image.url}" '
             f'height=200 />'
     )
 
+    class Meta:
+        ordering = ['id']
+
 
 @admin.register(Place)
-class PlaceAdmin(admin.ModelAdmin):
+class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = (
         'title',
         'short_description',
         'longitude',
         'latitude'
     )
-    inlines = (ImageInline, )
+    inlines = [
+        ImageInline,
+    ]
 
 
 @admin.register(Image)

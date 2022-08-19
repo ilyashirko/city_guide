@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'where_to_go'
+    'where_to_go',
+    'adminsortable2'
 ]
 
 MIDDLEWARE = [
