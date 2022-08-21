@@ -10,3 +10,6 @@ media
 # private data
 .env
 *.sqlite3
+
+# migrations
+where_to_go/migrations/*.py
