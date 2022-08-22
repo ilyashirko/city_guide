@@ -26,7 +26,7 @@ def main_page(request):
             },
             "properties": {
                 "title": place.title,
-                "detailsUrl": f'http://127.0.0.1:8000/places/{place.id}'
+                "detailsUrl": urljoin(request.get_host(), f'places/{place.id}')
             }
         })
     return render(request, 'index.html', context)
