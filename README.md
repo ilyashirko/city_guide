@@ -31,3 +31,7 @@ python3 manage.py runserver
 * [loglevel](https://www.npmjs.com/package/loglevel) для логгирования
 * [Bootstrap](https://getbootstrap.com/) — CSS библиотека
 * [Vue.js](https://ru.vuejs.org/) — реактивные шаблоны на фронтенде
+
+
+## Демо-версия сайта
+[City_Guide](https://ilyashirko.pythonanywhere.com/)
