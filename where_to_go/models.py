@@ -15,7 +15,7 @@ class Place(models.Model):
         return f'{self.title} [{self.longitude}, {self.latitude}]'
 
     class Meta:
-        ordering = ['id']
+        ordering = ['id', ]
 
 
 class Image(models.Model):
@@ -25,7 +25,10 @@ class Image(models.Model):
         related_name='images',
         on_delete=models.CASCADE
     )
-    index = models.SmallIntegerField('Порядковый номер (UNIQUE ONLY)', default=0)
+    index = models.SmallIntegerField(
+        'Порядковый номер (UNIQUE ONLY)',
+        default=0
+    )
     image = models.ImageField('Изображение', upload_to=IMAGES_PATH)
 
     class Meta:
