@@ -11,8 +11,52 @@ cd city_guide &&
 python3 -m venv env &&
 source env/bin/activate &&
 pip3 install -r requirements.txt &&
+```  
+
+для работы понадобится файл .env:
+```
+SECRET_KEY=
+DEBUG=True or False
+ALLOWED_HOSTS=
+SECURE_HSTS_SECONDS=0
+SECURE_HSTS_INCLUDE_SUBDOMAINS=True or False
+SECURE_HSTS_PRELOAD=True or False
+SECURE_SSL_REDIRECT=True or False
+SESSION_COOKIE_SECURE=True or False
+CSRF_COOKIE_SECURE=True or False
+```  
+
+после добавления .env запускаем:
+```
 python3 manage.py migrate &&
 python3 manage.py createsuperuser
+```  
+
+если миграция не создала модели place и image:
+```
+python3 manage.py migrate where_to_go
+```
+## Добавление локаций
+Для добавления новой локации введите команду:
+```
+python3 manage.py load_place -j {path to json} or {url with content type == application/json} or {path with jsons}
+```
+Словарь должен быть формата:
+```
+{
+    "title": str(),
+    "imgs": [
+        {url1},
+        {url2},
+        ...
+    ],
+    "description_short": str(),
+    "description_long": str(),
+    "coordinates": {
+        "lng": str(),
+        "lat": str()
+    }
+}
 ```
 
 ## Запуск
