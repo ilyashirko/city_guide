@@ -41,8 +41,8 @@ python3 manage.py migrate where_to_go
 ```
 python3 manage.py load_place -j {path to json} or {url with content type == application/json} or {path with jsons}
 ```
-[!Note]
-Checking note
+> [!NOTE]
+> Information the user should notice even if skimming.
 Словарь должен быть формата:
 ```
 {
