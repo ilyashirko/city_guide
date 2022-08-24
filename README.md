@@ -41,8 +41,12 @@ python3 manage.py migrate where_to_go
 ```
 python3 manage.py load_place -j {path to json} or {url with content type == application/json} or {path with jsons}
 ```
-> [!NOTE]
-> Information the user should notice even if skimming.
+> Примечание  
+> {path to json} может быть:
+>   ссылкой, где content_type == application/json;
+>   относительным или абсолютным путем хранения JSON файла;
+>   папкой, содержащей в себе JSONы если их надо добавить несколько.  
+
 Словарь должен быть формата:
 ```
 {
