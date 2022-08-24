@@ -10,7 +10,7 @@ git clone https://github.com/ilyashirko/city_guide &&
 cd city_guide &&
 python3 -m venv env &&
 source env/bin/activate &&
-pip3 install -r requirements.txt &&
+pip3 install -r requirements.txt
 ```  
 
 для работы понадобится файл .env:
