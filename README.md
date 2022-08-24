@@ -39,10 +39,10 @@ python3 manage.py migrate where_to_go
 ## Добавление локаций
 Для добавления новой локации введите команду:
 ```
-python3 manage.py load_place -j {path to json} or {url with content type == application/json} or {path with jsons}
+python3 manage.py load_place -j {path_to_json}
 ```
 > Примечание  
-> {path to json} может быть:  
+> {path_to_json} может быть:  
 > - ссылкой, где content_type == application/json;  
 > - относительным или абсолютным путем хранения JSON файла;  
 > - папкой, содержащей в себе JSONы если их надо добавить несколько.    
