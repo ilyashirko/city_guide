@@ -45,7 +45,7 @@ def get_place_dict_via_id(request, place_id):
         for image in place.images.all()
     ]
     
-    detailes = {
+    details = {
             "title": place.title,
             "imgs": images_urls,
             "description_short": place.short_description,
@@ -55,8 +55,4 @@ def get_place_dict_via_id(request, place_id):
                 "lat": place.latitude
             }
         }
-    return JsonResponse(
-        detailes,
-        safe=False,
-        json_dumps_params={'ensure_ascii': False, 'indent': 4}
-    )
+    return JsonResponse(details, json_dumps_params={'ensure_ascii': False})
