@@ -44,7 +44,7 @@ def get_place_dict_via_id(request, place_id):
         urljoin(request.get_host(), image.image.url)
         for image in place.images.all()
     ]
-    
+
     details = {
             "title": place.title,
             "imgs": images_urls,

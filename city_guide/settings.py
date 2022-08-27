@@ -113,7 +113,7 @@ USE_TZ = True
 
 MEDIA_URL = 'media/'
 MEDIA_PATH = 'media'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH) 
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH)
 
 IMAGES_PATH = env.str('IMAGES_PATH')
 
