@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableAdminMixin, SortableStackedInline
+from adminsortable2.admin import SortableAdminBase, SortableStackedInline
 from django.contrib import admin
 from django.utils.html import format_html
 
@@ -22,7 +22,7 @@ class ImageInline(SortableStackedInline):
 
 
 @admin.register(Place)
-class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
+class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     list_display = (
         'title',
         'short_description',

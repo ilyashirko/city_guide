@@ -13,9 +13,6 @@ class Place(models.Model):
     def __str__(self):
         return f'{self.title} [{self.longitude}, {self.latitude}]'
 
-    class Meta:
-        ordering = ['id', ]
-
 
 class Image(models.Model):
     place = models.ForeignKey(
