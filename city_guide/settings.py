@@ -117,6 +117,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH)
 
 IMAGES_PATH = env.str('IMAGES_PATH')
 
+PLACE_API_URL = env.str('PLACE_API_URL')
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [

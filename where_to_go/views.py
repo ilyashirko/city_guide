@@ -18,7 +18,10 @@ def make_geojson_feature(request, place):
         },
         "properties": {
             "title": place.title,
-            "detailsUrl": urljoin(request.get_host(), f'places/{place.id}')
+            "detailsUrl": urljoin(
+                request.get_host(),
+                f'{settings.PLACE_API_URL}/{place.id}'
+            )
         }
     }
 

@@ -17,6 +17,7 @@ pip3 install -r requirements.txt
 ```
 SECRET_KEY=
 IMAGES_PATH=
+PLACE_API_URL=
 DEBUG=True or False
 ALLOWED_HOSTS=
 SECURE_HSTS_SECONDS=0
@@ -27,6 +28,7 @@ SESSION_COOKIE_SECURE=True or False
 CSRF_COOKIE_SECURE=True or False
 ```  
 IMAGES_PATH - путь для хранения изображений в media/  
+PLACE_API_URL - путь для доступа к API локаций (вводить без "/" в начале и конце)
 [подробнее об остальных настройках](https://docs.djangoproject.com/en/4.1/ref/settings/)  
 
 
