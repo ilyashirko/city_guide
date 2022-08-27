@@ -11,9 +11,6 @@ media
 .env
 *.sqlite3
 
-# migrations
-where_to_go/migrations/*.py
-
 # static
 static/admin
 static/adminsortable2
