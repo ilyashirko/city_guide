@@ -40,12 +40,11 @@ def render_main_page(request):
 
 def get_place_dict_via_id(request, place_id):
     place = get_object_or_404(Place, id=place_id)
-    images_paths = [str(image.image) for image in place.images.all()]
     images_urls = [
-        urljoin(request.get_host(), f'{settings.MEDIA_URL}{image_path}')
-        for image_path in images_paths
+        urljoin(request.get_host(), image.image.url)
+        for image in place.images.all()
     ]
-
+    
     detailes = {
             "title": place.title,
             "imgs": images_urls,
