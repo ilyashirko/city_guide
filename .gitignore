@@ -13,3 +13,9 @@ media
 
 # migrations
 where_to_go/migrations/*.py
+
+# static
+static/admin
+static/adminsortable2
+static/django_tinymce
+static/tinymce

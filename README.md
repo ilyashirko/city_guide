@@ -16,6 +16,7 @@ pip3 install -r requirements.txt
 для работы понадобится файл .env:
 ```
 SECRET_KEY=
+IMAGES_PATH=
 DEBUG=True or False
 ALLOWED_HOSTS=
 SECURE_HSTS_SECONDS=0
@@ -25,6 +26,9 @@ SECURE_SSL_REDIRECT=True or False
 SESSION_COOKIE_SECURE=True or False
 CSRF_COOKIE_SECURE=True or False
 ```  
+IMAGES_PATH - путь для хранения изображений в media/  
+[подробнее об остальных настройках](https://docs.djangoproject.com/en/4.1/ref/settings/)  
+
 
 после добавления .env запускаем:
 ```
