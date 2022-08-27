@@ -2,12 +2,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from where_to_go.views import main_page, place_via_id
+from where_to_go.views import render_main_page, get_place_dict_via_id
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_page),
-    path('places/<int:place_id>', place_via_id),
+    path('', render_main_page),
+    path('places/<int:place_id>', get_place_dict_via_id),
     path('tinymce/', include('tinymce.urls')),
 ]
 

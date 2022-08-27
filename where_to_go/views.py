@@ -9,7 +9,7 @@ from django.shortcuts import render
 from .models import Place
 
 
-def make_geoJson_feature(request, place):
+def make_geojson_feature(request, place):
     return {
         "type": "Feature",
         "geometry": {
@@ -23,9 +23,9 @@ def make_geoJson_feature(request, place):
     }
 
 
-def main_page(request):
+def render_main_page(request):
     places = Place.objects.all()
-    features = [make_geoJson_feature(request, place) for place in places]
+    features = [make_geojson_feature(request, place) for place in places]
     context = {
         "all_places": {
             "type": "FeatureCollection",
@@ -35,7 +35,7 @@ def main_page(request):
     return render(request, 'index.html', context)
 
 
-def place_via_id(request, place_id):
+def get_place_dict_via_id(request, place_id):
     place = Place.objects.get(id=place_id)
     images_paths = [str(image.image) for image in place.images.all()]
     images_urls = [
