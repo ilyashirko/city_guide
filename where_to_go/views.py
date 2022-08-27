@@ -2,7 +2,7 @@
 
 from urllib.parse import urljoin
 
-from city_guide import settings
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 

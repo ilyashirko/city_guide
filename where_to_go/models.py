@@ -1,7 +1,6 @@
+from django.conf import settings
 from django.db import models
 from tinymce.models import HTMLField
-
-from city_guide.settings import IMAGES_PATH
 
 
 class Place(models.Model):
@@ -29,7 +28,7 @@ class Image(models.Model):
         'Порядковый номер (UNIQUE ONLY)',
         default=0
     )
-    image = models.ImageField('Изображение', upload_to=IMAGES_PATH)
+    image = models.ImageField('Изображение', upload_to=settings.IMAGES_PATH)
 
     class Meta:
         ordering = ['index', ]
