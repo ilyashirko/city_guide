@@ -6,8 +6,8 @@ from city_guide.settings import IMAGES_PATH
 
 class Place(models.Model):
     title = models.CharField('Название', max_length=100)
-    short_description = models.TextField('Короткое описание')
-    full_description = HTMLField('Полное описание')
+    short_description = models.TextField('Короткое описание', blank=True)
+    full_description = HTMLField('Полное описание', blank=True)
     longitude = models.FloatField('Долгота')
     latitude = models.FloatField('Широта')
 
