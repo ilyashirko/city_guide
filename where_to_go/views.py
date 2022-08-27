@@ -32,7 +32,7 @@ def main_page(request):
     return render(request, 'index.html', context)
 
 
-def place_via_id(request, place_id=None):
+def place_via_id(request, place_id):
     place = Place.objects.get(id=place_id)
     images_paths = [str(image.image) for image in place.images.all()]
     images_urls = [
