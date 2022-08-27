@@ -9,26 +9,29 @@ from django.shortcuts import render
 from .models import Place
 
 
+def make_geoJson_feature(request, place):
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [place.longitude, place.latitude]
+        },
+        "properties": {
+            "title": place.title,
+            "detailsUrl": urljoin(request.get_host(), f'places/{place.id}')
+        }
+    }
+
+
 def main_page(request):
     places = Place.objects.all()
+    features = [make_geoJson_feature(request, place) for place in places]
     context = {
         "all_places": {
             "type": "FeatureCollection",
-            "features": []
+            "features": features
         }
     }
-    for place in places:
-        context["all_places"]["features"].append({
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [place.longitude, place.latitude]
-            },
-            "properties": {
-                "title": place.title,
-                "detailsUrl": urljoin(request.get_host(), f'places/{place.id}')
-            }
-        })
     return render(request, 'index.html', context)
 
 
