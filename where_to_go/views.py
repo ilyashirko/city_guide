@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 
 from django.conf import settings
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Place
 
@@ -39,7 +39,7 @@ def render_main_page(request):
 
 
 def get_place_dict_via_id(request, place_id):
-    place = Place.objects.get(id=place_id)
+    place = get_object_or_404(Place, id=place_id)
     images_paths = [str(image.image) for image in place.images.all()]
     images_urls = [
         urljoin(request.get_host(), f'{settings.MEDIA_URL}{image_path}')
