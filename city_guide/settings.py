@@ -16,9 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 
 # Application definition
@@ -115,16 +115,16 @@ MEDIA_URL = 'media/'
 MEDIA_PATH = 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH)
 
-IMAGES_PATH = env.str('IMAGES_PATH')
+IMAGES_PATH = env.str('IMAGES_PATH', default='images')
 
-PLACE_API_URL = env.str('PLACE_API_URL')
+PLACE_API_URL = env.str('PLACE_API_URL', default='places')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     'static'
 ]
-STATIC_ROOT = env.str("STATIC_ROOT")
+STATIC_ROOT = env.str("STATIC_ROOT", default='assets')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -16,9 +16,6 @@ pip3 install -r requirements.txt
 для работы понадобится файл `.env`, ниже его дефолтные значения для тестов:
 ```
 SECRET_KEY='fa7zg0io9snm&1_4htv6b5(z86h-pntdfa=y=om4q!2m-t&e#j'
-IMAGES_PATH=images
-PLACE_API_URL=places
-STATIC_ROOT=assets
 DEBUG=True
 ALLOWED_HOSTS="*"
 SECURE_HSTS_SECONDS=0
@@ -28,10 +25,12 @@ SECURE_SSL_REDIRECT=False
 SESSION_COOKIE_SECURE=False
 CSRF_COOKIE_SECURE=False
 ```  
-IMAGES_PATH - путь для хранения изображений в media/  
-PLACE_API_URL - путь для доступа к API локаций (вводить без "/" в начале и конце)  
+также можете указать свои значения для переменых:
+- IMAGES_PATH - путь для хранения изображений в media/ (default='images')  
+- PLACE_API_URL - путь для доступа к API локаций (вводить без "/" в начале и конце)  
+- STATIC_ROOT
 [подробнее об остальных настройках](https://docs.djangoproject.com/en/4.1/ref/settings/)  
-для запуска в прод не забудьте выпустить уникальный SECRET_KEY
+для запуска в прод не забудьте выпустить уникальный SECRET_KEY 
 
 
 после добавления .env запускаем:
