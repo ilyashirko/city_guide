@@ -13,24 +13,25 @@ source env/bin/activate &&
 pip3 install -r requirements.txt
 ```  
 
-для работы понадобится файл .env:
+для работы понадобится файл `.env`, ниже его дефолтные значения для тестов:
 ```
-SECRET_KEY=
-IMAGES_PATH=
-PLACE_API_URL=
-STATIC_ROOT=
-DEBUG=True or False
-ALLOWED_HOSTS=
+SECRET_KEY='fa7zg0io9snm&1_4htv6b5(z86h-pntdfa=y=om4q!2m-t&e#j'
+IMAGES_PATH=images
+PLACE_API_URL=places
+STATIC_ROOT=assets
+DEBUG=True
+ALLOWED_HOSTS="*"
 SECURE_HSTS_SECONDS=0
-SECURE_HSTS_INCLUDE_SUBDOMAINS=True or False
-SECURE_HSTS_PRELOAD=True or False
-SECURE_SSL_REDIRECT=True or False
-SESSION_COOKIE_SECURE=True or False
-CSRF_COOKIE_SECURE=True or False
+SECURE_HSTS_INCLUDE_SUBDOMAINS=False
+SECURE_HSTS_PRELOAD=False
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
 ```  
 IMAGES_PATH - путь для хранения изображений в media/  
 PLACE_API_URL - путь для доступа к API локаций (вводить без "/" в начале и конце)  
 [подробнее об остальных настройках](https://docs.djangoproject.com/en/4.1/ref/settings/)  
+для запуска в прод не забудьте выпустить уникальный SECRET_KEY
 
 
 после добавления .env запускаем:
