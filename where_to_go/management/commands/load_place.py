@@ -29,7 +29,7 @@ def create_location(place_info):
             num,
             url,
             place,
-            os.path.join(settings.MEDIA_PATH, settings.IMAGES_PATH)
+            os.path.join(settings.MEDIA_PATH, 'images')
         )
 
     return place, _

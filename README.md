@@ -26,7 +26,6 @@ SESSION_COOKIE_SECURE=False
 CSRF_COOKIE_SECURE=False
 ```  
 также можете указать свои значения для переменых:
-- IMAGES_PATH - путь для хранения изображений в media/ (default='images')  
 - PLACE_API_URL - путь для доступа к API локаций (вводить без "/" в начале и конце)  
 - STATIC_ROOT
 [подробнее об остальных настройках](https://docs.djangoproject.com/en/4.1/ref/settings/)  

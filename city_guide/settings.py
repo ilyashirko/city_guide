@@ -112,10 +112,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 MEDIA_URL = 'media/'
-MEDIA_PATH = 'media'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH)
 
-IMAGES_PATH = env.str('IMAGES_PATH', default='images')
+MEDIA_PATH = 'media'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH)
 
 PLACE_API_URL = env.str('PLACE_API_URL', default='places')
 
@@ -125,9 +125,6 @@ STATICFILES_DIRS = [
     'static'
 ]
 STATIC_ROOT = env.str("STATIC_ROOT", default='assets')
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

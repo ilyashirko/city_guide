@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import models
 from tinymce.models import HTMLField
 
@@ -25,7 +24,7 @@ class Image(models.Model):
         'Порядковый номер (UNIQUE ONLY)',
         default=0
     )
-    image = models.ImageField('Изображение', upload_to=settings.IMAGES_PATH)
+    image = models.ImageField('Изображение', upload_to='images')
 
     class Meta:
         ordering = ['index', ]
