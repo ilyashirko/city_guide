@@ -11,7 +11,7 @@ class Place(models.Model):
     latitude = models.FloatField('Широта')
 
     def __str__(self):
-        return f'{self.title} [{self.longitude}, {self.latitude}]'
+        return self.title
 
 
 class Image(models.Model):

@@ -15,7 +15,7 @@ class ImageInline(SortableStackedInline):
         return format_html(
             f'<img src="{obj.image.url}" '
             f'height=200 />'
-    )
+        )
 
     class Meta:
         ordering = ['index']
