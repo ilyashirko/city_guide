@@ -2,9 +2,12 @@ import json
 import os
 import sys
 
+from hashlib import md5
+
 import requests
 
 from city_guide import settings
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from where_to_go.models import Image, Place
 
@@ -21,30 +24,27 @@ def create_location(place_info):
     if not place_info['imgs']:
         return place
 
-    image_dir = os.path.join(settings.MEDIA_PATH, settings.IMAGES_PATH)
-    os.makedirs(image_dir, exist_ok=True)
-
     for num, url in enumerate(place_info['imgs']):
-        download_image(num, url, place, image_dir)
+        download_image(
+            num,
+            url,
+            place,
+            os.path.join(settings.MEDIA_PATH, settings.IMAGES_PATH)
+        )
 
     return place, _
 
 
 def download_image(num, url, place, image_dir):
     response = requests.get(url)
-    if not response.ok:
-        return
+    response.raise_for_status()
 
-    photo_name = f'{place.title}_{num + 1}.jpg'
-    with open(os.path.join(image_dir, photo_name), 'wb') as new_photo:
-        new_photo.write(response.content)
-
-    image, _ = Image.objects.get_or_create(
-        place=place,
-        index=num + 1,
-        image=os.path.join(settings.IMAGES_PATH, photo_name),
+    photo = ContentFile(
+        response.content,
+        name=md5(response.content).hexdigest()
     )
-    return image
+    image, _ = Image.objects.get_or_create(place=place, image=photo, index=num)
+    return image, _
 
 
 class Command(BaseCommand):
