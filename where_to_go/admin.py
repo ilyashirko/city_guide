@@ -18,7 +18,7 @@ class ImageInline(SortableStackedInline):
     )
 
     class Meta:
-        ordering = ['id']
+        ordering = ['index']
 
 
 @admin.register(Place)
