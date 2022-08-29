@@ -20,31 +20,39 @@ def create_location(place_info):
         longitude=float(place_info['coordinates']['lng']),
         latitude=float(place_info['coordinates']['lat']),
     )
-
-    if not place_info['imgs']:
-        return place
-
-    for num, url in enumerate(place_info['imgs']):
-        download_image(
-            num,
-            url,
-            place,
-            os.path.join(settings.MEDIA_PATH, 'images')
-        )
-
     return place, _
 
 
-def download_image(num, url, place, image_dir):
-    response = requests.get(url)
-    response.raise_for_status()
+def download_images(place, images_urls):
+    if not images_urls:
+        return 
+    for num, url in enumerate(images_urls):
+        response = requests.get(url)
+        if not response.ok:
+            continue
+        photo = ContentFile(
+            response.content,
+            name=md5(response.content).hexdigest()
+        )
+        Image.objects.get_or_create(place=place, image=photo, index=num)
+    return place.images.all()
 
-    photo = ContentFile(
-        response.content,
-        name=md5(response.content).hexdigest()
-    )
-    image, _ = Image.objects.get_or_create(place=place, image=photo, index=num)
-    return image, _
+
+def get_places_info(entered_path):
+    places_info = list()
+    if os.path.isfile(entered_path):
+        with open(entered_path, 'r') as file:
+            places_info.append(json.load(file))
+        return places_info
+    
+    for file in os.listdir(entered_path):
+        try:
+            with open(os.path.join(entered_path, file), 'r') as file_info:
+                places_info.append(json.load(file_info))
+        except json.JSONDecodeError:
+            print(f'BROKEN JSON: "{file}"')
+    return places_info
+
 
 
 class Command(BaseCommand):
@@ -56,25 +64,19 @@ class Command(BaseCommand):
             sys.exit()
 
         entered_path = kwargs['json_path']
-        place_info = None
-
+        
         if os.path.exists(entered_path):
-            if '.json' in entered_path:
-                try:
-                    with open(entered_path, 'r') as file:
-                        place_info = json.load(file)
-                except json.JSONDecodeError:
-                    print('BROKEN JSON')
-            else:
-                files = os.listdir(entered_path)
-                json_files = [file for file in files if '.json' in file]
+            try:
+                places_info = get_places_info(entered_path)
+            except json.JSONDecodeError:
+                print('BROKEN JSON')
         else:
             try:
                 response = requests.get(entered_path)
                 if not response.ok:
                     print('BAD RESPONSE')
                     sys.exit()
-                place_info = response.json()
+                places_info = (response.json(), )
             except json.JSONDecodeError:
                 print('BAD CONTENT TYPE')
                 sys.exit()
@@ -82,23 +84,15 @@ class Command(BaseCommand):
                 print('INVALID INPUT')
                 sys.exit()
 
-        try:
-            if place_info:
-                create_location(place_info)
-            elif json_files:
-                for file in json_files:
-                    try:
-                        with open(
-                            os.path.join(entered_path, file), 'r'
-                        ) as place_json:
-                            place_info = json.load(place_json)
-                            create_location(place_info)
-                    except json.JSONDecodeError:
-                        print('BROKEN JSON')
-            else:
-                print('THERE IS NO JSONS HERE')
-        except KeyError:
-            print('INCORRECT JSON SCHEME')
+        if not places_info:
+            return
+
+        for place_info in places_info:
+            try:
+                place, _ = create_location(place_info)
+                download_images(place, place_info['imgs'])
+            except KeyError:
+                print('INCORRECT JSON SCHEME')
 
     def add_arguments(self, parser):
         parser.add_argument(
