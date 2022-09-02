@@ -26,7 +26,7 @@ def create_location(place_info):
 def download_images(place, images_urls):
     if not images_urls:
         return 
-    for num, url in enumerate(images_urls):
+    for num, url in enumerate(images_urls, start=1):
         response = requests.get(url)
         if not response.ok:
             continue
