@@ -11,19 +11,6 @@ from django.core.management.base import BaseCommand
 from where_to_go.models import Image, Place
 
 
-def create_location(place_info):
-    place, _ = Place.objects.update_or_create(
-        title=place_info['title'],
-        longitude=float(place_info['coordinates']['lng']),
-        latitude=float(place_info['coordinates']['lat']),
-        defaults={
-            'short_description': place_info.get('description_short', ''),
-            'full_description': place_info.get('description_long', '')
-        }
-    )
-    return place, _
-
-
 def download_images(place, images_urls):
     if not images_urls:
         return
@@ -43,7 +30,7 @@ def download_images(place, images_urls):
     return place.images.all()
 
 
-def get_places_info(entered_path):
+def extract_places_info(entered_path):
     places_info = list()
     if os.path.isfile(entered_path):
         with open(entered_path, 'r') as file:
@@ -59,44 +46,48 @@ def get_places_info(entered_path):
     return places_info
 
 
+def get_places_info(entered_path):
+    if os.path.exists(entered_path):
+        places_info = extract_places_info(entered_path)
+    else:
+        response = requests.get(entered_path)
+        response.raise_for_status()
+        places_info = (response.json(), )
+    return places_info
+
+
 class Command(BaseCommand):
     help = "Load places"
 
     def handle(self, *args, **kwargs):
-        if not kwargs['json_path']:
-            print('Enter json path, link or directory with jsons...')
-            sys.exit()
-
         entered_path = kwargs['json_path']
 
-        if os.path.exists(entered_path):
-            try:
-                places_info = get_places_info(entered_path)
-            except json.JSONDecodeError:
-                print('BROKEN JSON')
-        else:
-            try:
-                response = requests.get(entered_path)
-                if not response.ok:
-                    print('BAD RESPONSE')
-                    sys.exit()
-                places_info = (response.json(), )
-            except json.JSONDecodeError:
-                print('BAD CONTENT TYPE')
-                sys.exit()
-            except requests.exceptions.MissingSchema:
-                print('INVALID INPUT')
-                sys.exit()
+        try:
+            places_info = get_places_info(entered_path)
+        except json.JSONDecodeError as error:
+            self.stdout.write(self.style.ERROR(error))
+            sys.exit()
+        except requests.exceptions.MissingSchema as error:
+            self.stdout.write(self.style.ERROR('Local file not found.'))
+            self.stdout.write(self.style.ERROR(error))
+            sys.exit()
 
         if not places_info:
             return
 
         for place_info in places_info:
             try:
-                place, created = create_location(place_info)
-                if not created:
-                    continue
-                download_images(place, place_info['imgs'])
+                place, created = Place.objects.update_or_create(
+                    title=place_info['title'],
+                    longitude=float(place_info['coordinates']['lng']),
+                    latitude=float(place_info['coordinates']['lat']),
+                    defaults={
+                        'short_description': place_info.get('description_short', ''),
+                        'full_description': place_info.get('description_long', '')
+                    }
+                )
+                if created:
+                    download_images(place, place_info['imgs'])
             except KeyError:
                 print('INCORRECT JSON SCHEME')
             except Place.MultipleObjectsReturned:
@@ -111,6 +102,7 @@ class Command(BaseCommand):
                 'относительный либо абсолютный путь Json-файла,'
                 'url, где content_type == application/json или папка,'
                 'которая содержит json-файлы'
-            )
+            ),
+            required=True
         )
         return super().add_arguments(parser)
