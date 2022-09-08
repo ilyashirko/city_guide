@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from where_to_go.views import render_main_page, get_place_dict_via_id
+from where_to_go.views import get_place_dict_via_id, render_main_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,9 +14,7 @@ urlpatterns = [
 urlpatterns += static(
     settings.STATIC_URL,
     document_root=(
-        settings.STATICFILES_DIRS
-        if settings.DEBUG
-        else settings.STATIC_ROOT
+        settings.STATIC_ROOT
     )
 )
 

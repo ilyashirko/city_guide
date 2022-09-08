@@ -17,9 +17,6 @@ class ImageInline(SortableStackedInline):
             f'height=200 />'
         )
 
-    class Meta:
-        ordering = ['index']
-
 
 @admin.register(Place)
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
