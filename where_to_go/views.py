@@ -9,14 +9,14 @@ from .models import Place
 
 def make_geojson_feature(request, place):
     return {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [place.longitude, place.latitude]
+        'type': 'Feature',
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [place.longitude, place.latitude]
         },
-        "properties": {
-            "title": place.title,
-            "detailsUrl": reverse('places_api', args=(place.id,))
+        'properties': {
+            'title': place.title,
+            'detailsUrl': reverse('places_api', args=(place.id,))
         }
     }
 

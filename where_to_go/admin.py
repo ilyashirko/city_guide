@@ -7,7 +7,7 @@ from where_to_go.models import Image, Place
 
 class ImageInline(SortableStackedInline):
     model = Image
-    readonly_fields = ("preview", )
+    readonly_fields = ('preview', )
     fields = ['id', 'image', 'preview', ]
     extra = 0
 
