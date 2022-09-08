@@ -73,7 +73,10 @@ class Command(BaseCommand):
             sys.exit()
 
         if not places_info:
-            return
+            self.stdout.write(self.style.ERROR(
+                'There is no available locations'
+            ))
+            sys.exit()
 
         for place_info in places_info:
             try:
@@ -82,8 +85,14 @@ class Command(BaseCommand):
                     longitude=float(place_info['coordinates']['lng']),
                     latitude=float(place_info['coordinates']['lat']),
                     defaults={
-                        'short_description': place_info.get('description_short', ''),
-                        'full_description': place_info.get('description_long', '')
+                        'short_description': place_info.get(
+                            'description_short',
+                            ''
+                        ),
+                        'full_description': place_info.get(
+                            'description_long',
+                            ''
+                        )
                     }
                 )
                 if created:
@@ -91,7 +100,9 @@ class Command(BaseCommand):
             except KeyError as error:
                 self.stdout.write(self.style.ERROR(error))
             except Place.MultipleObjectsReturned as error:
-                self.stdout.write(self.style.ERROR(f'[{place_info["title"]}]: {error}'))
+                self.stdout.write(
+                    self.style.ERROR(f'[{place_info["title"]}]: {error}')
+                )
 
     def add_arguments(self, parser):
         parser.add_argument(
