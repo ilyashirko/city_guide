@@ -117,8 +117,6 @@ MEDIA_PATH = 'media'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_PATH)
 
-PLACE_API_URL = env.str('PLACE_API_URL', default='places')
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [

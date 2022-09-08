@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.conf import settings
 from django.http import JsonResponse
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 
 from .models import Place
@@ -16,7 +16,7 @@ def make_geojson_feature(request, place):
         },
         "properties": {
             "title": place.title,
-            "detailsUrl": f'{settings.PLACE_API_URL}/{place.id}'
+            "detailsUrl": reverse('places_api', args=(place.id,))
         }
     }
 

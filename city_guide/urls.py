@@ -7,7 +7,7 @@ from where_to_go.views import render_main_page, get_place_dict_via_id
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', render_main_page),
-    path(f'{settings.PLACE_API_URL}/<int:place_id>', get_place_dict_via_id),
+    path('places/<int:place_id>/', get_place_dict_via_id, name='places_api'),
     path('tinymce/', include('tinymce.urls')),
 ]
 
