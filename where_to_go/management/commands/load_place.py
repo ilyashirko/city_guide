@@ -38,7 +38,7 @@ def download_images(place, images_urls):
         Image.objects.create(
             place=place,
             image=photo,
-            defaults={'index': num}
+            index=num,
         )
     return place.images.all()
 
@@ -99,6 +99,8 @@ class Command(BaseCommand):
                 download_images(place, place_info['imgs'])
             except KeyError:
                 print('INCORRECT JSON SCHEME')
+            except Place.MultipleObjectsReturned:
+                continue
 
     def add_arguments(self, parser):
         parser.add_argument(
