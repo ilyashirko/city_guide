@@ -88,10 +88,10 @@ class Command(BaseCommand):
                 )
                 if created:
                     download_images(place, place_info['imgs'])
-            except KeyError:
-                print('INCORRECT JSON SCHEME')
-            except Place.MultipleObjectsReturned:
-                continue
+            except KeyError as error:
+                self.stdout.write(self.style.ERROR(error))
+            except Place.MultipleObjectsReturned as error:
+                self.stdout.write(self.style.ERROR(f'[{place_info["title"]}]: {error}'))
 
     def add_arguments(self, parser):
         parser.add_argument(
