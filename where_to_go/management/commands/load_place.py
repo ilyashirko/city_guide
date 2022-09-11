@@ -52,7 +52,7 @@ def get_places_info(entered_path):
     else:
         response = requests.get(entered_path)
         response.raise_for_status()
-        places_info = (response.json(), )
+        places_info = [response.json(), ]
     return places_info
 
 
