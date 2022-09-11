@@ -46,17 +46,17 @@ class Command(BaseCommand):
             places_info = self.get_places_info(entered_path)
         except json.JSONDecodeError as error:
             self.stdout.write(self.style.ERROR(error))
-            sys.exit()
+            sys.exit(1)
         except requests.exceptions.MissingSchema as error:
             self.stdout.write(self.style.ERROR('Local file not found.'))
             self.stdout.write(self.style.ERROR(error))
-            sys.exit()
+            sys.exit(1)
 
         if not places_info:
             self.stdout.write(self.style.ERROR(
                 'There is no available locations'
             ))
-            sys.exit()
+            sys.exit(1)
 
         for place_info in places_info:
             try:
