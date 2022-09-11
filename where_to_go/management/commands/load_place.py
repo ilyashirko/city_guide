@@ -30,30 +30,10 @@ def download_images(place, images_urls):
     return place.images.all()
 
 
-def extract_places_info(entered_path):
-    places_info = list()
-    if os.path.isfile(entered_path):
-        with open(entered_path, 'r') as file:
-            places_info.append(json.load(file))
-        return places_info
-
-    for file in os.listdir(entered_path):
-        try:
-            with open(os.path.join(entered_path, file), 'r') as file_info:
-                places_info.append(json.load(file_info))
-        except json.JSONDecodeError:
-            print(f'BROKEN JSON: "{file}"')
-    return places_info
-
-
-def get_places_info(entered_path):
-    if os.path.exists(entered_path):
-        places_info = extract_places_info(entered_path)
-    else:
-        response = requests.get(entered_path)
-        response.raise_for_status()
-        places_info = [response.json(), ]
-    return places_info
+def extract_place_info(file_name):
+    with open(file_name, 'r') as file:
+        place_info = json.load(file)
+    return place_info
 
 
 class Command(BaseCommand):
@@ -63,7 +43,7 @@ class Command(BaseCommand):
         entered_path = kwargs['json_path']
 
         try:
-            places_info = get_places_info(entered_path)
+            places_info = self.get_places_info(entered_path)
         except json.JSONDecodeError as error:
             self.stdout.write(self.style.ERROR(error))
             sys.exit()
@@ -103,6 +83,23 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.ERROR(f'[{place_info["title"]}]: {error}')
                 )
+
+    def get_places_info(self, entered_path):
+        places_info = list()
+        if os.path.isfile(entered_path):
+            places_info.append(extract_place_info(entered_path))
+        elif os.path.isdir(entered_path):
+            for filename in os.listdir(entered_path):
+                try:
+                    filepath = os.path.join(entered_path, filename)
+                    places_info.append(extract_place_info(filepath))
+                except json.JSONDecodeError as error:
+                    self.stdout.write(self.style.ERROR(f'[{filepath}]: {error}'))
+        else:
+            response = requests.get(entered_path)
+            response.raise_for_status()
+            places_info = [response.json(), ]
+        return places_info
 
     def add_arguments(self, parser):
         parser.add_argument(
