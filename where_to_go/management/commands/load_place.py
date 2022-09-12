@@ -90,8 +90,8 @@ class Command(BaseCommand):
             places_info.append(extract_place_info(entered_path))
         elif os.path.isdir(entered_path):
             for filename in os.listdir(entered_path):
+                filepath = os.path.join(entered_path, filename)
                 try:
-                    filepath = os.path.join(entered_path, filename)
                     places_info.append(extract_place_info(filepath))
                 except json.JSONDecodeError as error:
                     self.stdout.write(self.style.ERROR(f'[{filepath}]: {error}'))
